@@ -2,32 +2,205 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "Grey Qo";
+  src: url("/font/GreyQo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+  font-family: "Grey Qo";
+  src: url("/font/GreyQo-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Cinzel Fonts */
+@font-face {
+  font-family: "Cinzel";
+  src: url("/font/Cinzel-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cinzel";
+  src: url("/font/Cinzel-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Hide the smooth-scrollbar's track and thumb */
+.scrollbar-track {
+  display: none !important;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Cinzel";
+  background-color: black;
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.text {
+  font-family: "Grey Qo";
+  font-size: 100px;
+  fill: none;
+  stroke: rgb(255, 255, 255);
+  stroke-width: 2;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: stroke 5s forwards, fill 2s 1s forwards; /* 5s delay for the fill animation */
+}
+@keyframes stroke {
+  to {
+    stroke-dashoffset: 0;
   }
+}
+@keyframes fill {
+  0% {
+    fill: rgba(255, 255, 255, 0);
+  }
+  100% {
+    fill: rgba(255, 255, 255, 1); /* End with full white */
+  }
+}
+
+.noise-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.3' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 182px;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.box1 {
+  height: 50rem;
+  margin: 5rem 20rem;
+  background: linear-gradient(
+    to right top,
+    #260006,
+    #760201,
+    #ec7b79,
+    #c35d82,
+    #270005
+  );
+}
+
+#fixed-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.scrollSpace {
+  width: 2em;
+  height: 30em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  z-index: 90;
+  position: fixed;
+  top: 5%;
+}
+
+.scroller-track {
+  width: 2.5px;
+  height: 50%;
+  background-color: #211827;
+  border-radius: 10px;
+  display: flex;
+  margin: 20px 0px;
+}
+.scroller-thumb {
+  position: relative;
+  top: 0%;
+  width: 5px;
+  height: 15%;
+  background-color: #ececec;
+  border-radius: 5px;
+}
+.page-no {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  rotate: 90deg;
+  color: #a1a2a2;
+}
+.scroll-info {
+  width: 2em;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-info p {
+  rotate: 90deg;
+  background: linear-gradient(to bottom, rgb(254, 254, 254), rgba(0, 0, 0, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  mask-image: linear-gradient(
+    to bottom,
+    rgb(255, 255, 255) 60%,
+    transparent 100%
+  );
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.header-tab {
+  width: fit-content;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin: 20px 0px;
+}
+
+.displacement {
+  filter: url(#displacementFilter);
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
+
+.loader svg {
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 400px;
 }
