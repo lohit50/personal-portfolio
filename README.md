@@ -34,3 +34,7 @@ python3 -m http.server 8000
 ## Deploy
 
 Works as-is on GitHub Pages: Settings → Pages → deploy from `main`, root.
+
+---
+
+Built by **Lohit R** — [lohit.space](https://lohit.space)
